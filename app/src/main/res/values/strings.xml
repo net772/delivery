@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">delivery</string>
+
+    <string name="home">홈</string>
+
+    <string name="liked">찜</string>
+
+    <string name="my">my</string>
+</resources>

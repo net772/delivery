@@ -6,8 +6,6 @@ import com.example.delivery.R
 import com.example.delivery.databinding.ActivityMainBinding
 import com.example.delivery.ui.base.BaseActivity
 import com.example.delivery.ui.home.HomeFragment
-import com.example.delivery.ui.like.RestaurantLikeListFragment
-import com.example.delivery.ui.my.MyFragment
 import com.example.delivery.utility.event.BottomNavigatorEvent
 import com.example.delivery.utility.event.EventBus
 import com.example.delivery.utility.extension.onEvent
@@ -38,6 +36,7 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>(), Navigat
         binding.lifecycleOwner = this
     }
 
+
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         return when(item.itemId) {
             R.id.menu_home -> {
@@ -46,17 +45,19 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>(), Navigat
             }
 
             R.id.menu_like -> {
-                showFragment(RestaurantLikeListFragment.newInstance(), RestaurantLikeListFragment.TAG)
+               // showFragment(RestaurantLikeListFragment.newInstance(), RestaurantLikeListFragment.TAG)
                 true
             }
 
             R.id.menu_my -> {
-                showFragment(MyFragment.newInstance(), MyFragment.TAG)
+             //   showFragment(MyFragment.newInstance(), MyFragment.TAG)
                 true
             }
             else -> false
         }
     }
+
+
 
     private fun showFragment(fragment: Fragment, tag: String) {
         val findFragment = supportFragmentManager.findFragmentByTag(tag)

@@ -9,7 +9,7 @@ import com.example.delivery.data.entity.UserLikeEntity
 import com.example.delivery.databinding.ActivityUserDetailBinding
 import com.example.delivery.ui.base.BaseActivity
 import com.example.delivery.ui.detail.UserDetailViewModel.Companion.KEY_USERDATA
-import com.example.delivery.utility.loadCenterCrop
+import com.example.delivery.utility.extension.loadCenterCrop
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 
@@ -45,12 +45,12 @@ class UserDetailActivity: BaseActivity<UserDetailViewModel, ActivityUserDetailBi
         }
     }
 
-    override fun observeData() {
-        viewModel.userDetailStateLiveData.onUiState(
-            error = { handleError() },
-            success = { handleSuccess(it) }
-        )
-    }
+//    override fun observeData() {
+//        viewModel.userDetailStateLiveData.onUiState(
+//            error = { handleError() },
+//            success = { handleSuccess(it) }
+//        )
+//    }
 
     @SuppressLint("ShowToast")
     private fun handleError() {

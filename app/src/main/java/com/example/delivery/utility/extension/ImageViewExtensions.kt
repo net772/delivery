@@ -1,4 +1,4 @@
-package com.example.delivery.utility
+package com.example.delivery.utility.extension
 
 import android.widget.ImageView
 import com.bumptech.glide.Glide

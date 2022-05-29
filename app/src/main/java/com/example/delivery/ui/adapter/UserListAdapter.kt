@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.delivery.R
 import com.example.delivery.data.entity.UserLikeEntity
 import com.example.delivery.databinding.ItemUsersBinding
-import com.example.delivery.utility.loadCenterCrop
+import com.example.delivery.utility.extension.loadCenterCrop
 
 class UserListAdapter(
     private val callback: (data: UserLikeEntity) -> Unit

@@ -1,28 +1,29 @@
 package com.example.delivery.data.network
 
-import com.example.delivery.BuildConfig
 import com.google.gson.FieldNamingPolicy
 import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
+import org.koin.android.BuildConfig
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
-internal fun provideGithupApiService(retrofit: Retrofit): ApiService {
-    return retrofit.create(ApiService::class.java)
-}
-
-internal fun provideGithupRetrofit(
+fun provideMapRetrofit(
     okHttpClient: OkHttpClient,
     gsonConverterFactory: GsonConverterFactory,
 ): Retrofit {
     return Retrofit.Builder()
-        .baseUrl(Url.GITHUP_BASE_URL)
+        .baseUrl(Url.TMAP_URL)
         .addConverterFactory(gsonConverterFactory)
         .client(okHttpClient)
         .build()
 }
+
+fun provideMapApiService(retrofit: Retrofit): MapApiService {
+    return retrofit.create(MapApiService::class.java)
+}
+
 
 internal fun provideGsonConverterFactory(): GsonConverterFactory {
     return GsonConverterFactory.create(

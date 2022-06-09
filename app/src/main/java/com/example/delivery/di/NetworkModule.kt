@@ -1,9 +1,9 @@
 package com.example.delivery.di
 
 import com.example.delivery.data.network.buildOkHttpClient
-import com.example.delivery.data.network.provideGithupApiService
-import com.example.delivery.data.network.provideGithupRetrofit
 import com.example.delivery.data.network.provideGsonConverterFactory
+import com.example.delivery.data.network.provideMapApiService
+import com.example.delivery.data.network.provideMapRetrofit
 import org.koin.dsl.module
 
 val networkModule = module {
@@ -11,7 +11,7 @@ val networkModule = module {
 
     single { buildOkHttpClient() }
 
-    single { provideGithupRetrofit(get(), get()) }
+    single { provideMapApiService(get()) }
 
-    single { provideGithupApiService(get()) }
+    single { provideMapRetrofit(get(), get()) }
 }

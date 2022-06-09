@@ -1,12 +1,10 @@
 package com.example.delivery.di
 
-import com.example.delivery.data.repository.ApiRepository
-import com.example.delivery.data.repository.ApiRepositoryImpl
-import com.example.delivery.data.repository.DbRepository
-import com.example.delivery.data.repository.DbRepositoryImpl
+import com.example.delivery.data.repository.*
 import org.koin.dsl.module
 
 val repositoryModule = module {
-    single<ApiRepository> {  ApiRepositoryImpl(get() ) }
+    single<MapRepository> {  MapRepositoryImpl(get() ) }
     single<DbRepository> {  DbRepositoryImpl(get() ) }
+    single<UserRepository> {  UserRepositoryImpl(get() ) }
 }

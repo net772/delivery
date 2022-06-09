@@ -1,4 +1,4 @@
-package com.example.delivery.ui.home
+package com.example.delivery.ui.home.restaurant
 
 import android.app.Application
 import com.example.delivery.ui.base.BaseViewModel

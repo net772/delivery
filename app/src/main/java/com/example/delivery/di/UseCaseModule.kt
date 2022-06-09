@@ -1,12 +1,10 @@
 package com.example.delivery.di
 
-import com.example.delivery.domain.usecase.*
+import com.example.delivery.domain.usecase.GetReverseGeoInformationUseCase
+import com.example.delivery.domain.usecase.GetUserLocationUseCase
 import org.koin.dsl.module
 
 val useCaseModule = module {
-    factory { GetGithubUseCase(get()) }
-    factory { GetUserAllLikeUseCase(get()) }
-    factory { ReqInsertUserLikeUseCase(get()) }
-    factory { ReqDeleteUserLikedUseCase(get()) }
-    factory { GetUserLikeUseCase(get()) }
+    factory { GetReverseGeoInformationUseCase(get()) }
+    factory { GetUserLocationUseCase(get()) }
 }

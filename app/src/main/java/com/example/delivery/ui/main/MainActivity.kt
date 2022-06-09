@@ -9,18 +9,24 @@ import com.example.delivery.ui.home.HomeFragment
 import com.example.delivery.utility.event.BottomNavigatorEvent
 import com.example.delivery.utility.event.EventBus
 import com.example.delivery.utility.extension.onEvent
-import com.google.android.material.navigation.NavigationView
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import com.google.android.material.navigation.NavigationView
 
-class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>(), NavigationView.OnNavigationItemSelectedListener {
+class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>(), BottomNavigationView.OnNavigationItemSelectedListener {
     override val viewModel by viewModel<MainViewModel>()
 
     override fun getViewBinding() = ActivityMainBinding.inflate(layoutInflater)
 
     override fun initActivity() {
         initDataBinding()
-        collectEvent()
-        EventBus.emit(BottomNavigatorEvent.Home(R.id.menu_home))
+        initViews()
+       // collectEvent()
+     //   EventBus.emit(BottomNavigatorEvent.Home(R.id.menu_home))
+    }
+
+    private fun initViews() = with(binding) {
+        bottomNav.setOnNavigationItemSelectedListener(this@MainActivity)
     }
 
     private fun collectEvent() {

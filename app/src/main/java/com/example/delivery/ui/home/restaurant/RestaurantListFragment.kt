@@ -1,4 +1,4 @@
-package com.example.delivery.ui.home
+package com.example.delivery.ui.home.restaurant
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -7,12 +7,12 @@ import com.example.delivery.data.entity.location.LocationLatLngEntity
 import com.example.delivery.databinding.FragmentListBinding
 import com.example.delivery.ui.adapter.RestaurantListAdapter
 import com.example.delivery.ui.base.BaseFragment
-import com.example.delivery.ui.home.restaurant.RestaurantCategory
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class RestaurantListFragment: BaseFragment<FragmentListBinding>() {
     private val restaurantCategory by lazy { arguments?.getSerializable(RESTAURANT_CATEGORY_KEY) as RestaurantCategory } // 이건 좀 더 자료 찾아보고 바꿀 수 있으면 바꾸자!
-    private val locationLatLngEntity by lazy<LocationLatLngEntity> { arguments?.getParcelable(LOCATION_KEY)!! }
+    private val locationLatLngEntity by lazy<LocationLatLngEntity> { arguments?.getParcelable(
+        LOCATION_KEY)!! }
 
 
     private val viewModel: RestaurantListViewModel by viewModel()
@@ -42,10 +42,11 @@ class RestaurantListFragment: BaseFragment<FragmentListBinding>() {
         const val RESTAURANT_CATEGORY_KEY = "restaurantCategory"
         const val LOCATION_KEY = "location"
 
-        fun newInstance(restaurantCategory: RestaurantCategory): RestaurantListFragment {
+        fun newInstance(restaurantCategory: RestaurantCategory, locationLatLng: LocationLatLngEntity): RestaurantListFragment {
             return RestaurantListFragment().apply {
                 arguments = bundleOf(
-                    RESTAURANT_CATEGORY_KEY to restaurantCategory // ex) -> (restaurantCategory, ALL)
+                    RESTAURANT_CATEGORY_KEY to restaurantCategory, // ex) -> (restaurantCategory, ALL)
+                    LOCATION_KEY to locationLatLng
                 )
             }
         }

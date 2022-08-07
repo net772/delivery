@@ -1,5 +1,6 @@
 package com.example.delivery.utility.event
 
+import android.util.Log
 import com.example.delivery.utility.config.KoinConstants
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope

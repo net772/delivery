@@ -1,5 +1,6 @@
 package com.example.delivery.ui.main
 
+import android.util.Log
 import android.view.MenuItem
 import androidx.fragment.app.Fragment
 import com.example.delivery.R
@@ -13,16 +14,16 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import com.google.android.material.navigation.NavigationView
 
-class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>(), BottomNavigationView.OnNavigationItemSelectedListener {
-    override val viewModel by viewModel<MainViewModel>()
+class MainActivity : BaseActivity<ActivityMainBinding>(), BottomNavigationView.OnNavigationItemSelectedListener {
+    private val viewModel by viewModel<MainViewModel>()
 
-    override fun getViewBinding() = ActivityMainBinding.inflate(layoutInflater)
+    override fun createBinding() = ActivityMainBinding.inflate(layoutInflater)
 
     override fun initActivity() {
         initDataBinding()
         initViews()
-       // collectEvent()
-     //   EventBus.emit(BottomNavigatorEvent.Home(R.id.menu_home))
+        collectEvent()
+        EventBus.emit(BottomNavigatorEvent.Home(R.id.menu_home))
     }
 
     private fun initViews() = with(binding) {
@@ -30,11 +31,13 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>(), BottomN
     }
 
     private fun collectEvent() {
-        onEvent<BottomNavigatorEvent> { goToTab(it) }
+        onEvent<BottomNavigatorEvent.Home> {
+            Log.d("동현","collectEvent")
+            goToTab(it) }
     }
 
     fun goToTab(mainTabMenu: BottomNavigatorEvent) {
-        binding.bottomNav.selectedItemId = mainTabMenu.menuId
+      //  binding.bottomNav.selectedItemId = mainTabMenu.menuId
     }
 
     private fun initDataBinding() {

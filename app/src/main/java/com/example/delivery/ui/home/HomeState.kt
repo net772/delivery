@@ -17,4 +17,6 @@ sealed class HomeState {
     data class Error(
         @StringRes val messageId: Int
     ): HomeState()
+
+    object Finish: HomeState()
 }

@@ -2,6 +2,7 @@ package com.example.delivery.ui.base
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.lifecycleScope
 import androidx.viewbinding.ViewBinding
@@ -10,27 +11,21 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
-abstract class BaseActivity<VM: BaseViewModel, VB: ViewBinding>: AppCompatActivity() {
-    abstract val viewModel: VM
+abstract class BaseActivity<Binding : ViewDataBinding>: AppCompatActivity() {
 
-    private var _binding: VB? = null
-    protected val binding get() = _binding!!
+    protected val binding: Binding by lazy { createBinding() }
 
-    abstract fun getViewBinding(): VB
+    protected abstract fun createBinding(): Binding
 
     protected open fun initActivity() = Unit
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        _binding = getViewBinding()
         setContentView(binding.root)
 
-        initActivity()
-    }
+        binding.lifecycleOwner = this
 
-    override fun onDestroy() {
-        _binding = null
-        super.onDestroy()
+        initActivity()
     }
 
     protected fun <T> LiveData<T>.observe(action: (T) -> Unit) {

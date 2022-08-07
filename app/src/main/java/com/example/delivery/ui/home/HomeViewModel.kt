@@ -1,6 +1,7 @@
 package com.example.delivery.ui.home
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.asFlow
 import androidx.lifecycle.viewModelScope
@@ -24,9 +25,14 @@ class HomeViewModel(
 
     fun loadReverseGeoInformation(locationLatLngEntity: LocationLatLngEntity) = viewModelScope.launch {
         val userLocation = getUserLocationUseCase.invoke().firstOrNull()
-        val currentLocation = userLocation ?: locationLatLngEntity
+        //val currentLocation = userLocation ?: locationLatLngEntity
+        val currentLocation = LocationLatLngEntity(37.504449,127.048860,-1)
 
-        val addressInfo = getReverseGeoInformationUseCase.invoke(currentLocation)
+        Log.d("동현","userLocation : ${userLocation}")
+        Log.d("동현","12 : ${currentLocation}")
+
+
+        getReverseGeoInformationUseCase.invoke(currentLocation)
             .onStart {
                 _homeStateLiveData.value = HomeState.Loading
             }
@@ -35,15 +41,16 @@ class HomeViewModel(
                     messageId = R.string.can_not_load_address_info
                 )
             }
-            .onResult { info ->
-            _homeStateLiveData.value = HomeState.Success(
-                MapSearchInfoEntity(
-                    fullAddress = info.fullAddress ?: "주소 정보 없음",
-                    name = info.buildingName ?: "빌딩정보 없음",
-                    locationLatLng = currentLocation
-                ),
-                isLocationSame = currentLocation == locationLatLngEntity
-            )
-        }
+            .onResult { addressInfo ->
+                Log.d("동현", "addressInfo : $addressInfo")
+                _homeStateLiveData.value = HomeState.Success(
+                    MapSearchInfoEntity(
+                        fullAddress = addressInfo.fullAddress ?: "주소 정보 없음",
+                        name = addressInfo.buildingName ?: "빌딩정보 없음",
+                        locationLatLng = currentLocation
+                    ),
+                    isLocationSame = currentLocation == locationLatLngEntity
+                )
+            }
     }
 }

@@ -1,5 +1,6 @@
 package com.example.delivery.utility.extension
 
+import android.util.Log
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
@@ -13,7 +14,9 @@ inline fun <reified T : EventBus.Event> LifecycleOwner.onEvent(
 ) {
     lifecycleScope.launch {
         repeatOnLifecycle(repeatState) {
-            EventBus.collect<T>(this) { action.invoke(it)}
+            EventBus.collect<T>(this) {
+                Log.d("동현","onEvent123")
+                action.invoke(it)}
         }
     }
 }

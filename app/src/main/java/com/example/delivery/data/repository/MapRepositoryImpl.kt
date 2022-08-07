@@ -16,5 +16,7 @@ class MapRepositoryImpl(
             lat = locationLatLngEntity.latitude,
             lon = locationLatLngEntity.longitude
         ))
-    }.map { it.addressInfo }
+    }.map {
+        it.addressInfo ?: throw java.lang.NullPointerException("Make NPE")
+     }
 }

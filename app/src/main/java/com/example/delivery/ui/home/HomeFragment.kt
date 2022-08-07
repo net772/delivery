@@ -1,10 +1,12 @@
 package com.example.delivery.ui.home
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.content.Context
 import android.location.Location
 import android.location.LocationListener
 import android.location.LocationManager
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Toast
@@ -49,7 +51,7 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>() {
             }
 
             if (responsePermissions.filter { it.value == true }.size == locationPermissions.size) {
-
+                setMyLocationListener()
             } else {
                 with(binding.locationTitleTextView) {
                     text = getString(R.string.please_request_location_permission)
@@ -104,6 +106,7 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>() {
                     binding.locationTitleTextView.text = getString(R.string.loading)
                 }
                 is HomeState.Success -> {
+                    Log.d("동현","성고ㅗㅇ")
                     binding.locationLoading.isGone = true
                     binding.tabLayout.isVisible = true
                     binding.filterScrollView.isVisible = true
@@ -148,6 +151,25 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>() {
         }
     }
 
+    @SuppressLint("MissingPermission")
+    private fun setMyLocationListener() {
+        val minTime: Long = 1500
+        val minDistance = 100f
+        if (::myLocationListener.isInitialized.not()) {
+            myLocationListener = MyLocationListener()
+        }
+        with(locationManager) {
+            requestLocationUpdates(
+                LocationManager.GPS_PROVIDER,
+                minTime, minDistance, myLocationListener
+            )
+            requestLocationUpdates(
+                LocationManager.NETWORK_PROVIDER,
+                minTime, minDistance, myLocationListener
+            )
+        }
+    }
+
     private fun getMyLocation() {
         if (::locationManager.isInitialized.not()) {
             locationManager = requireContext().getSystemService(Context.LOCATION_SERVICE) as LocationManager
@@ -161,8 +183,19 @@ class HomeFragment: BaseFragment<FragmentHomeBinding>() {
     /** 위치 변환 콜백 **/
     inner class MyLocationListener : LocationListener {
         override fun onLocationChanged(location: Location) {
-            TODO("Not yet implemented")
+            homeViewModel.loadReverseGeoInformation(
+                LocationLatLngEntity(
+                    location.latitude,
+                    location.longitude
+                )
+            )
+            removeLocationListener()
         }
+    }
 
+    private fun removeLocationListener() {
+        if (::locationManager.isInitialized && ::myLocationListener.isInitialized) {
+            locationManager.removeUpdates(myLocationListener)
+        }
     }
 }
